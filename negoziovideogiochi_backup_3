@@ -1,0 +1,847 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 10.4
+-- Dumped by pg_dump version 10.4
+
+-- Started on 2018-07-06 12:09:10 CEST
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- TOC entry 2531 (class 1262 OID 16429)
+-- Name: negoziovideogiochi; Type: DATABASE; Schema: -; Owner: postgres
+--
+
+CREATE DATABASE negoziovideogiochi WITH TEMPLATE = template0 ENCODING = 'UTF8' LC_COLLATE = 'C' LC_CTYPE = 'C';
+
+
+ALTER DATABASE negoziovideogiochi OWNER TO postgres;
+
+\connect negoziovideogiochi
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- TOC entry 1 (class 3079 OID 12544)
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- TOC entry 2533 (class 0 OID 0)
+-- Dependencies: 1
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- TOC entry 210 (class 1259 OID 16549)
+-- Name: acquisto; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.acquisto (
+    cf character(16) NOT NULL,
+    codicefattura integer NOT NULL,
+    tipoprodotto character varying(20) NOT NULL,
+    codiceprodotto integer NOT NULL,
+    quantita smallint NOT NULL,
+    importocad smallint NOT NULL,
+    dataacquisto date NOT NULL
+);
+
+
+ALTER TABLE public.acquisto OWNER TO postgres;
+
+--
+-- TOC entry 209 (class 1259 OID 16547)
+-- Name: Acquisto_CodiceFattura_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public."Acquisto_CodiceFattura_seq"
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public."Acquisto_CodiceFattura_seq" OWNER TO postgres;
+
+--
+-- TOC entry 2534 (class 0 OID 0)
+-- Dependencies: 209
+-- Name: Acquisto_CodiceFattura_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public."Acquisto_CodiceFattura_seq" OWNED BY public.acquisto.codicefattura;
+
+
+--
+-- TOC entry 208 (class 1259 OID 16541)
+-- Name: console; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.console (
+    codiceconsole smallint NOT NULL,
+    nome character varying(20) NOT NULL,
+    modello character varying(20),
+    produttore character varying(20) NOT NULL,
+    condizione character varying(8) NOT NULL,
+    prezzo smallint NOT NULL,
+    quantita smallint NOT NULL,
+    datauscita date NOT NULL
+);
+
+
+ALTER TABLE public.console OWNER TO postgres;
+
+--
+-- TOC entry 207 (class 1259 OID 16539)
+-- Name: Console_CodiceConsole_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public."Console_CodiceConsole_seq"
+    AS smallint
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public."Console_CodiceConsole_seq" OWNER TO postgres;
+
+--
+-- TOC entry 2535 (class 0 OID 0)
+-- Dependencies: 207
+-- Name: Console_CodiceConsole_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public."Console_CodiceConsole_seq" OWNED BY public.console.codiceconsole;
+
+
+--
+-- TOC entry 200 (class 1259 OID 16460)
+-- Name: evento; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.evento (
+    idevento integer NOT NULL,
+    titolo text NOT NULL,
+    data date NOT NULL,
+    luogo text NOT NULL,
+    genere character varying(20) NOT NULL,
+    creatore character(16) NOT NULL
+);
+
+
+ALTER TABLE public.evento OWNER TO postgres;
+
+--
+-- TOC entry 199 (class 1259 OID 16458)
+-- Name: Evento_IdEvento_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public."Evento_IdEvento_seq"
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public."Evento_IdEvento_seq" OWNER TO postgres;
+
+--
+-- TOC entry 2536 (class 0 OID 0)
+-- Dependencies: 199
+-- Name: Evento_IdEvento_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public."Evento_IdEvento_seq" OWNED BY public.evento.idevento;
+
+
+--
+-- TOC entry 202 (class 1259 OID 16484)
+-- Name: offerta; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.offerta (
+    codiceofferta integer NOT NULL,
+    tipoofferta character varying(15) NOT NULL,
+    datainizio date NOT NULL,
+    datafine date NOT NULL,
+    valore smallint NOT NULL,
+    creatore character(16) NOT NULL
+);
+
+
+ALTER TABLE public.offerta OWNER TO postgres;
+
+--
+-- TOC entry 201 (class 1259 OID 16482)
+-- Name: Offerta_CodiceOfferta_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public."Offerta_CodiceOfferta_seq"
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public."Offerta_CodiceOfferta_seq" OWNER TO postgres;
+
+--
+-- TOC entry 2537 (class 0 OID 0)
+-- Dependencies: 201
+-- Name: Offerta_CodiceOfferta_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public."Offerta_CodiceOfferta_seq" OWNED BY public.offerta.codiceofferta;
+
+
+--
+-- TOC entry 197 (class 1259 OID 16437)
+-- Name: tesserato; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.tesserato (
+    idtessera integer NOT NULL,
+    cf character varying(16) NOT NULL,
+    nome character varying(20) NOT NULL,
+    cognome character varying(20) NOT NULL,
+    telefono integer NOT NULL,
+    datanascita date NOT NULL,
+    livellotessera character varying(7) NOT NULL,
+    creazionetessera date NOT NULL,
+    scadenzatessera date
+);
+
+
+ALTER TABLE public.tesserato OWNER TO postgres;
+
+--
+-- TOC entry 196 (class 1259 OID 16435)
+-- Name: Tesserato_IdTessera_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public."Tesserato_IdTessera_seq"
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public."Tesserato_IdTessera_seq" OWNER TO postgres;
+
+--
+-- TOC entry 2538 (class 0 OID 0)
+-- Dependencies: 196
+-- Name: Tesserato_IdTessera_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public."Tesserato_IdTessera_seq" OWNED BY public.tesserato.idtessera;
+
+
+--
+-- TOC entry 212 (class 1259 OID 16567)
+-- Name: vendita; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.vendita (
+    tesserato integer NOT NULL,
+    codicefattura integer NOT NULL,
+    tipoprodotto character varying(20) NOT NULL,
+    codiceprodotto integer NOT NULL,
+    quantita smallint NOT NULL,
+    importocad smallint NOT NULL,
+    datavendita date NOT NULL
+);
+
+
+ALTER TABLE public.vendita OWNER TO postgres;
+
+--
+-- TOC entry 211 (class 1259 OID 16565)
+-- Name: Vendita_CodiceFattura_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public."Vendita_CodiceFattura_seq"
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public."Vendita_CodiceFattura_seq" OWNER TO postgres;
+
+--
+-- TOC entry 2539 (class 0 OID 0)
+-- Dependencies: 211
+-- Name: Vendita_CodiceFattura_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public."Vendita_CodiceFattura_seq" OWNED BY public.vendita.codicefattura;
+
+
+--
+-- TOC entry 206 (class 1259 OID 16530)
+-- Name: videogioco; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.videogioco (
+    codicevideogioco integer NOT NULL,
+    titolo text NOT NULL,
+    piattaforma character varying(20) NOT NULL,
+    genere character varying(20) NOT NULL,
+    condizione character(8) NOT NULL,
+    prezzo smallint NOT NULL,
+    quantita smallint NOT NULL,
+    datauscita date NOT NULL
+);
+
+
+ALTER TABLE public.videogioco OWNER TO postgres;
+
+--
+-- TOC entry 205 (class 1259 OID 16528)
+-- Name: Videogioco_CodiceVideogioco_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public."Videogioco_CodiceVideogioco_seq"
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public."Videogioco_CodiceVideogioco_seq" OWNER TO postgres;
+
+--
+-- TOC entry 2540 (class 0 OID 0)
+-- Dependencies: 205
+-- Name: Videogioco_CodiceVideogioco_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public."Videogioco_CodiceVideogioco_seq" OWNED BY public.videogioco.codicevideogioco;
+
+
+--
+-- TOC entry 203 (class 1259 OID 16495)
+-- Name: assegnazioneofferta; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.assegnazioneofferta (
+    offerta integer NOT NULL,
+    tesserato integer NOT NULL
+);
+
+
+ALTER TABLE public.assegnazioneofferta OWNER TO postgres;
+
+--
+-- TOC entry 198 (class 1259 OID 16450)
+-- Name: dipendente; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.dipendente (
+    cf character(16) NOT NULL,
+    password character varying(20) NOT NULL,
+    nome character varying(20) NOT NULL,
+    cognome character varying(20) NOT NULL,
+    telefono integer NOT NULL,
+    indirizzo text NOT NULL,
+    datanascita date NOT NULL
+);
+
+
+ALTER TABLE public.dipendente OWNER TO postgres;
+
+--
+-- TOC entry 204 (class 1259 OID 16513)
+-- Name: partecipazioneevento; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.partecipazioneevento (
+    evento smallint NOT NULL,
+    tesserato integer NOT NULL
+);
+
+
+ALTER TABLE public.partecipazioneevento OWNER TO postgres;
+
+--
+-- TOC entry 213 (class 1259 OID 16579)
+-- Name: prenotazione; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.prenotazione (
+    tesserato integer NOT NULL,
+    tipoprodotto character varying(20) NOT NULL,
+    codiceprodotto integer NOT NULL,
+    dataprenotazione date NOT NULL
+);
+
+
+ALTER TABLE public.prenotazione OWNER TO postgres;
+
+--
+-- TOC entry 2349 (class 2604 OID 16552)
+-- Name: acquisto codicefattura; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.acquisto ALTER COLUMN codicefattura SET DEFAULT nextval('public."Acquisto_CodiceFattura_seq"'::regclass);
+
+
+--
+-- TOC entry 2348 (class 2604 OID 16544)
+-- Name: console codiceconsole; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.console ALTER COLUMN codiceconsole SET DEFAULT nextval('public."Console_CodiceConsole_seq"'::regclass);
+
+
+--
+-- TOC entry 2345 (class 2604 OID 16463)
+-- Name: evento idevento; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.evento ALTER COLUMN idevento SET DEFAULT nextval('public."Evento_IdEvento_seq"'::regclass);
+
+
+--
+-- TOC entry 2346 (class 2604 OID 16487)
+-- Name: offerta codiceofferta; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.offerta ALTER COLUMN codiceofferta SET DEFAULT nextval('public."Offerta_CodiceOfferta_seq"'::regclass);
+
+
+--
+-- TOC entry 2344 (class 2604 OID 16466)
+-- Name: tesserato idtessera; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.tesserato ALTER COLUMN idtessera SET DEFAULT nextval('public."Tesserato_IdTessera_seq"'::regclass);
+
+
+--
+-- TOC entry 2350 (class 2604 OID 16570)
+-- Name: vendita codicefattura; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.vendita ALTER COLUMN codicefattura SET DEFAULT nextval('public."Vendita_CodiceFattura_seq"'::regclass);
+
+
+--
+-- TOC entry 2347 (class 2604 OID 16533)
+-- Name: videogioco codicevideogioco; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.videogioco ALTER COLUMN codicevideogioco SET DEFAULT nextval('public."Videogioco_CodiceVideogioco_seq"'::regclass);
+
+
+--
+-- TOC entry 2522 (class 0 OID 16549)
+-- Dependencies: 210
+-- Data for Name: acquisto; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 2515 (class 0 OID 16495)
+-- Dependencies: 203
+-- Data for Name: assegnazioneofferta; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 2520 (class 0 OID 16541)
+-- Dependencies: 208
+-- Data for Name: console; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.console VALUES (1, 'betto', 'biagio', 'comelico', 'nuovo', 1000, 1, '0001-01-01');
+INSERT INTO public.console VALUES (2, '3DS', 'wifi', 'nintendo', 'nuovo', 100, 23, '2018-01-01');
+
+
+--
+-- TOC entry 2510 (class 0 OID 16450)
+-- Dependencies: 198
+-- Data for Name: dipendente; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.dipendente VALUES ('cooooodicef     ', 'passsssqqoendcjkbkj', 'ghjkl', 'hjkl', 45678, '5678', '1995-05-06');
+INSERT INTO public.dipendente VALUES ('bfvcz           ', 'passsssqqoendcjkbkj', 'ghjkl', 'hjkl', 45678, '5678', '1995-05-06');
+INSERT INTO public.dipendente VALUES ('aaaa            ', 'bbbb', 'cccc', 'dddd', 55555, 'eeeee', '1995-05-16');
+INSERT INTO public.dipendente VALUES ('zzzz            ', 'unimi', 'xxxxx', 'yyyyy', 6666, 'iiii', '1995-05-17');
+
+
+--
+-- TOC entry 2512 (class 0 OID 16460)
+-- Dependencies: 200
+-- Data for Name: evento; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 2514 (class 0 OID 16484)
+-- Dependencies: 202
+-- Data for Name: offerta; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 2516 (class 0 OID 16513)
+-- Dependencies: 204
+-- Data for Name: partecipazioneevento; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 2525 (class 0 OID 16579)
+-- Dependencies: 213
+-- Data for Name: prenotazione; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 2509 (class 0 OID 16437)
+-- Dependencies: 197
+-- Data for Name: tesserato; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 2524 (class 0 OID 16567)
+-- Dependencies: 212
+-- Data for Name: vendita; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 2518 (class 0 OID 16530)
+-- Dependencies: 206
+-- Data for Name: videogioco; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.videogioco VALUES (2, 'black ops iiii', 'ps4', 'fps', 'nuovo   ', 70, 10, '2018-01-09');
+INSERT INTO public.videogioco VALUES (3, 'cookie mama', 'nintendo ds', 'cooking', 'buono   ', 10, 1, '2017-01-01');
+INSERT INTO public.videogioco VALUES (5, 'cookie mama 7', 'nintendo ds', 'cooking', 'discreto', 10, 1, '1996-06-26');
+INSERT INTO public.videogioco VALUES (6, 'cookie mama 7', 'nintendo ds', 'cooking', 'buono   ', 10, 1, '1996-06-26');
+INSERT INTO public.videogioco VALUES (1, 'COD', 'ps4', 'fps', 'nuovo   ', 70, 110, '2018-01-09');
+INSERT INTO public.videogioco VALUES (13, 'mario', 'ps4', 'racing', 'nuovo   ', 34, 1, '2010-01-06');
+INSERT INTO public.videogioco VALUES (4, 'cookie mama', 'nintendo ds', 'cooking', 'discreto', 10, 21, '2017-01-20');
+
+
+--
+-- TOC entry 2541 (class 0 OID 0)
+-- Dependencies: 209
+-- Name: Acquisto_CodiceFattura_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public."Acquisto_CodiceFattura_seq"', 1, false);
+
+
+--
+-- TOC entry 2542 (class 0 OID 0)
+-- Dependencies: 207
+-- Name: Console_CodiceConsole_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public."Console_CodiceConsole_seq"', 3, true);
+
+
+--
+-- TOC entry 2543 (class 0 OID 0)
+-- Dependencies: 199
+-- Name: Evento_IdEvento_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public."Evento_IdEvento_seq"', 1, false);
+
+
+--
+-- TOC entry 2544 (class 0 OID 0)
+-- Dependencies: 201
+-- Name: Offerta_CodiceOfferta_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public."Offerta_CodiceOfferta_seq"', 1, false);
+
+
+--
+-- TOC entry 2545 (class 0 OID 0)
+-- Dependencies: 196
+-- Name: Tesserato_IdTessera_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public."Tesserato_IdTessera_seq"', 1, false);
+
+
+--
+-- TOC entry 2546 (class 0 OID 0)
+-- Dependencies: 211
+-- Name: Vendita_CodiceFattura_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public."Vendita_CodiceFattura_seq"', 1, false);
+
+
+--
+-- TOC entry 2547 (class 0 OID 0)
+-- Dependencies: 205
+-- Name: Videogioco_CodiceVideogioco_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public."Videogioco_CodiceVideogioco_seq"', 14, true);
+
+
+--
+-- TOC entry 2374 (class 2606 OID 16554)
+-- Name: acquisto Acquisto_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.acquisto
+    ADD CONSTRAINT "Acquisto_pkey" PRIMARY KEY (codicefattura, tipoprodotto, codiceprodotto);
+
+
+--
+-- TOC entry 2362 (class 2606 OID 16502)
+-- Name: assegnazioneofferta AssegnazioneOfferta_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.assegnazioneofferta
+    ADD CONSTRAINT "AssegnazioneOfferta_pkey" PRIMARY KEY (offerta, tesserato);
+
+
+--
+-- TOC entry 2370 (class 2606 OID 16546)
+-- Name: console Console_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.console
+    ADD CONSTRAINT "Console_pkey" PRIMARY KEY (codiceconsole);
+
+
+--
+-- TOC entry 2356 (class 2606 OID 16457)
+-- Name: dipendente Dipendente_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.dipendente
+    ADD CONSTRAINT "Dipendente_pkey" PRIMARY KEY (cf);
+
+
+--
+-- TOC entry 2358 (class 2606 OID 16465)
+-- Name: evento Evento_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.evento
+    ADD CONSTRAINT "Evento_pkey" PRIMARY KEY (idevento);
+
+
+--
+-- TOC entry 2360 (class 2606 OID 16489)
+-- Name: offerta Offerta_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.offerta
+    ADD CONSTRAINT "Offerta_pkey" PRIMARY KEY (codiceofferta);
+
+
+--
+-- TOC entry 2364 (class 2606 OID 16517)
+-- Name: partecipazioneevento PartecipazioneEvento_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.partecipazioneevento
+    ADD CONSTRAINT "PartecipazioneEvento_pkey" PRIMARY KEY (evento, tesserato);
+
+
+--
+-- TOC entry 2378 (class 2606 OID 16583)
+-- Name: prenotazione Prenotazione_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.prenotazione
+    ADD CONSTRAINT "Prenotazione_pkey" PRIMARY KEY (tesserato, tipoprodotto, codiceprodotto);
+
+
+--
+-- TOC entry 2352 (class 2606 OID 16444)
+-- Name: tesserato Tesserato_CF_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.tesserato
+    ADD CONSTRAINT "Tesserato_CF_key" UNIQUE (cf);
+
+
+--
+-- TOC entry 2354 (class 2606 OID 16468)
+-- Name: tesserato Tesserato_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.tesserato
+    ADD CONSTRAINT "Tesserato_pkey" PRIMARY KEY (idtessera);
+
+
+--
+-- TOC entry 2376 (class 2606 OID 16572)
+-- Name: vendita Vendita_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.vendita
+    ADD CONSTRAINT "Vendita_pkey" PRIMARY KEY (codicefattura, tipoprodotto, codiceprodotto);
+
+
+--
+-- TOC entry 2366 (class 2606 OID 16538)
+-- Name: videogioco Videogioco_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.videogioco
+    ADD CONSTRAINT "Videogioco_pkey" PRIMARY KEY (codicevideogioco);
+
+
+--
+-- TOC entry 2372 (class 2606 OID 16650)
+-- Name: console console_nome_modello_condizione_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.console
+    ADD CONSTRAINT console_nome_modello_condizione_key UNIQUE (nome, modello, condizione);
+
+
+--
+-- TOC entry 2368 (class 2606 OID 16648)
+-- Name: videogioco videogioco_titolo_piattaforma_condizione_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.videogioco
+    ADD CONSTRAINT videogioco_titolo_piattaforma_condizione_key UNIQUE (titolo, piattaforma, condizione);
+
+
+--
+-- TOC entry 2381 (class 2606 OID 16503)
+-- Name: assegnazioneofferta AssegnazioneOfferta_Offerta_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.assegnazioneofferta
+    ADD CONSTRAINT "AssegnazioneOfferta_Offerta_fkey" FOREIGN KEY (offerta) REFERENCES public.offerta(codiceofferta);
+
+
+--
+-- TOC entry 2382 (class 2606 OID 16508)
+-- Name: assegnazioneofferta AssegnazioneOfferta_Tesserato_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.assegnazioneofferta
+    ADD CONSTRAINT "AssegnazioneOfferta_Tesserato_fkey" FOREIGN KEY (tesserato) REFERENCES public.tesserato(idtessera);
+
+
+--
+-- TOC entry 2379 (class 2606 OID 16477)
+-- Name: evento Evento_Creatore_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.evento
+    ADD CONSTRAINT "Evento_Creatore_fkey" FOREIGN KEY (creatore) REFERENCES public.dipendente(cf);
+
+
+--
+-- TOC entry 2380 (class 2606 OID 16490)
+-- Name: offerta Offerta_Creatore_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.offerta
+    ADD CONSTRAINT "Offerta_Creatore_fkey" FOREIGN KEY (creatore) REFERENCES public.dipendente(cf);
+
+
+--
+-- TOC entry 2383 (class 2606 OID 16518)
+-- Name: partecipazioneevento PartecipazioneEvento_Evento_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.partecipazioneevento
+    ADD CONSTRAINT "PartecipazioneEvento_Evento_fkey" FOREIGN KEY (evento) REFERENCES public.evento(idevento);
+
+
+--
+-- TOC entry 2384 (class 2606 OID 16523)
+-- Name: partecipazioneevento PartecipazioneEvento_Tesserato_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.partecipazioneevento
+    ADD CONSTRAINT "PartecipazioneEvento_Tesserato_fkey" FOREIGN KEY (tesserato) REFERENCES public.tesserato(idtessera);
+
+
+--
+-- TOC entry 2386 (class 2606 OID 16584)
+-- Name: prenotazione Prenotazione_Tesserato_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.prenotazione
+    ADD CONSTRAINT "Prenotazione_Tesserato_fkey" FOREIGN KEY (tesserato) REFERENCES public.tesserato(idtessera);
+
+
+--
+-- TOC entry 2385 (class 2606 OID 16573)
+-- Name: vendita Vendita_Tesserato_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.vendita
+    ADD CONSTRAINT "Vendita_Tesserato_fkey" FOREIGN KEY (tesserato) REFERENCES public.tesserato(idtessera);
+
+
+-- Completed on 2018-07-06 12:09:10 CEST
+
+--
+-- PostgreSQL database dump complete
+--
+
